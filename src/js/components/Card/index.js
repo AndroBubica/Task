@@ -36,7 +36,7 @@ class Card extends Component {
         <div className='card'>
           <div className='card-actions'>
             <i className={favorite ? 'fa fa-heart' : 'fa fa-heart-o'}
-               onClick={this.handleFavorite} />
+              onClick={this.handleFavorite} />
             <i
               className='fa fa-pencil card_right'
               onClick={this.handleEdit} />
@@ -44,9 +44,9 @@ class Card extends Component {
           </div>
           <div className='view-profile'
             onClick={this.handleView}>
-          <img
-               src='https://placeimg.com/80/80/people' className='card_image' />
-          <p>{fullName}</p>
+            <img alt='Profile picture'
+              src='https://placeimg.com/80/80/people' className='card_image' />
+            <p>{fullName}</p>
           </div>
         </div>
       </div>

@@ -25,9 +25,10 @@ export const updateContactSuccess = (updateId, updatedValues) => ({
   updatedValues
 })
 
-export const searchContactsSuccess = text => ({
+export const searchContactsSuccess = (text, isFavorite) => ({
   type: SEARCH_CONTACTS,
-  text
+  text,
+  isFavorite
 })
 
 export const addNewContact = values =>
@@ -46,6 +47,6 @@ export const updateContact = (id, values) =>
   dispatch =>
     dispatch(updateContactSuccess(id, values))
 
-export const searchContacts = id =>
+export const searchContacts = (id, isFavorite) =>
   dispatch =>
-    dispatch(searchContactsSuccess(id))
+    dispatch(searchContactsSuccess(id, isFavorite))

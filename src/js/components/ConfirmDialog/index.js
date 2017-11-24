@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import Modal from '../../container/Modal'
 import Aux from 'react-aux'
 import { deleteContact } from '../../actions/contatcs'
-import './styles.scss'
 
 class ConfirmDialog extends Component {
   constructor (props) {
@@ -58,7 +57,7 @@ class ConfirmDialog extends Component {
     return <Aux>
       <label>{label}
         <i className='fa fa-trash-o delete-action'
-           onClick={this.handleShow} />
+          onClick={this.handleShow} />
       </label>
       {modal}
     </Aux>

@@ -23,13 +23,13 @@ const renderPhone = ({ fields, meta }) =>
             component={Input}
           />
           <span onClick={() => fields.remove(i)}>
-          <i className='fa fa-times-circle-o' />
-        </span>
+            <i className='fa fa-times-circle-o' />
+          </span>
         </li>
       )}
       <li>
-      <span onClick={() => fields.push({})}>
-        <i className='material-icons'>add_circle_outline</i>
+        <span onClick={() => fields.push({})}>
+          <i className='material-icons'>add_circle_outline</i>
         Add number
       </span>
       </li>

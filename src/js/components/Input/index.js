@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isRequired, hasError } from '../../utils/validation'
-
+import { hasError } from '../../utils/validation'
 
 const InputComponent = ({input, name, label, meta, iconName, placeholder, ...rest}) => {
-    return (
+  return (
     <div className='input'>
       <div className='icon-label'>
         {iconName && <i className='material-icons'>{iconName}</i>}
         {label && <label htmlFor={name}>{label}</label>}
       </div>
       <div>
-        <input {...input}
-               {...rest}
-               id={name}
-               placeholder={placeholder} />
+        <input
+          {...input}
+          {...rest}
+          id={name}
+          placeholder={placeholder} />
         <span className='error'>{hasError(meta)}</span>
       </div>
     </div>

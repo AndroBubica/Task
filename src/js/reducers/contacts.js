@@ -3,17 +3,18 @@ import {
 }
   from '../constants/actions'
 
-const initialState = { filter: []}
+const initialState = { filter: [] }
 
-const filterByValue = (array, string) => {
+const filterByValue = (array, string, isFavorite) => {
   if (!string.length) return []
+
   return array.filter(o => {
     return Object.keys(o).some(k => {
-      if (location.pathname === '/favorites') {
+      if (isFavorite) {
         if (o.favorite) {
           if (typeof o[k] === 'string') return o[k].toLowerCase().includes(string.toLowerCase())
         }
-      }else {
+      } else {
         if (typeof o[k] === 'string') return o[k].toLowerCase().includes(string.toLowerCase())
       }
       if (typeof o[k] === 'object') {
@@ -47,10 +48,11 @@ export default (state = initialState, action) => {
       let { [action.deleteId.toString()]: deletedItem, ...rest } = state
       return rest
     case SEARCH_CONTACTS:
-      const data = state
-      const filter = filterByValue(Object.values(data), action.text)
+      const { filter, ...data } = state
+      const filtered = filterByValue(Object.values(data), action.text, action.isFavorite)
+
       return {
-        ...state, filter
+        ...state, filter: filtered
       }
     default:
       return state

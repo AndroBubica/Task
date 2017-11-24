@@ -25,7 +25,7 @@ class ViewContact extends Component {
 
   renderNumber () {
     const { numbers } = this.props
-    if(!numbers) return {}
+    if (!numbers) return {}
 
     return (
       <div className='icon-label view-contact numbers'>
@@ -34,9 +34,9 @@ class ViewContact extends Component {
         <div>
           {numbers.map((number, i) =>
             <span key={i}>
-            <p>{number.cell}</p>
-            <p> {number.number}</p>
-          </span>)}
+              <p>{number.cell}</p>
+              <p> {number.number}</p>
+            </span>)}
         </div>
       </div>
     )
@@ -52,24 +52,23 @@ class ViewContact extends Component {
           <div className='flex left'>
             <div
               className='image'
-              style={{background: 'url(https://placeimg.com/180/180/people) center/cover no-repeat'}}>
-            </div>
+              style={{background: 'url(https://placeimg.com/180/180/people) center/cover no-repeat'}} />
           </div>
           <div className='flex right'>
             <div className='edit-action-icons'>
               <p className='rotate-icon '
-                 onClick={this.props.history.goBack}
-              ><i className="material-icons">subdirectory_arrow_right</i></p>
+                onClick={this.props.history.goBack}
+              ><i className='material-icons'>subdirectory_arrow_right</i></p>
               <h1>{fullName}</h1>
               <div>
                 <i className={[favorite ? 'fa fa-heart' : 'fa fa-heart-o', 'favorite-icon'].join(' ')}
-                   onClick={this.handleFavorite} />
+                  onClick={this.handleFavorite} />
                 <i
                   className='fa fa-pencil card_right'
                   onClick={this.handleEdit} />
               </div>
             </div>
-            <hr/>
+            <hr />
             <div className='icon-label view-contact'>
               <i className='material-icons'>email</i>
               <label>email</label>
@@ -89,7 +88,7 @@ ViewContact.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (Number.isInteger(+ownProps.match.params.userId))
+  if (Number.isInteger(+ownProps.match.params.userId)) {
     return ({
       Id: state.contacts[ownProps.match.params.userId].id,
       image: state.contacts[ownProps.match.params.userId].image,
@@ -98,6 +97,7 @@ const mapStateToProps = (state, ownProps) => {
       numbers: state.contacts[ownProps.match.params.userId].numbers,
       favorite: state.contacts[ownProps.match.params.userId].favorite
     })
+  }
   return ({})
 }
 export default connect(mapStateToProps)(ViewContact)

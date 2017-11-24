@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-
 const AddContact = ({ handleClick }) =>
   <div className='cards-holder'>
     <div

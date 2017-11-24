@@ -41,12 +41,12 @@ class EditContact extends Component {
       <ul>
         <li>
           <i className='material-icons'
-             onClick={() => fields.push({})}>add circle outline</i>
+            onClick={() => fields.push({})}>add circle outline</i>
         </li>
         {fields.map((phone, i) =>
           <li key={i}>
             <i className='material-icons'
-               onClick={() => fields.remove(i)}>remove circle</i>
+              onClick={() => fields.remove(i)}>remove circle</i>
             <Field
               name={`${phone}.number`}
               placeholder='Number'
@@ -69,7 +69,7 @@ class EditContact extends Component {
     return (
       <article>
         <form className='flex-container'
-              onSubmit={handleSubmit(this.handleSubmit)}>
+          onSubmit={handleSubmit(this.handleSubmit)}>
           <div className='flex left'>
             <Field
               name='image'
@@ -79,13 +79,13 @@ class EditContact extends Component {
           <div className='flex right'>
             <div className='edit-action-icons'>
               <p className='rotate-icon'
-                 onClick={this.props.history.goBack}
-              ><i className="material-icons">subdirectory_arrow_right</i></p>
+                onClick={this.props.history.goBack}
+              ><i className='material-icons'>subdirectory_arrow_right</i></p>
               <div>
                 <ConfirmDialog contactId={Number(params.userId)} label='Delete' isReturn />
               </div>
             </div>
-            <hr/>
+            <hr />
             <Field
               name='fullName'
               label='full name'
@@ -95,7 +95,7 @@ class EditContact extends Component {
               component={Input}
               validation={isRequired}
             />
-            <hr/>
+            <hr />
             <Field
               name='email'
               label='email'
@@ -105,7 +105,7 @@ class EditContact extends Component {
               component={Input}
               validate={isRequired}
             />
-            <hr/>
+            <hr />
             <FieldArray
               name='numbers'
               component={ContactPhone} />
@@ -127,16 +127,17 @@ EditContact.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (Number.isInteger(+ownProps.match.params.userId))
+  if (Number.isInteger(+ownProps.match.params.userId)) {
     return ({
       stateImage: state.contacts[ownProps.match.params.userId].image,
       Id: state.contacts[ownProps.match.params.userId].id,
       initialValues: {
         fullName: state.contacts[ownProps.match.params.userId].fullName,
         email: state.contacts[ownProps.match.params.userId].email,
-        numbers: state.contacts[ownProps.match.params.userId].numbers,
+        numbers: state.contacts[ownProps.match.params.userId].numbers
       }
     })
+  }
   return ({})
 }
 export default connect(mapStateToProps)(reduxForm({

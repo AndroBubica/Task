@@ -40,12 +40,12 @@ class Addnew extends Component {
       <ul>
         <li>
           <i className='material-icons'
-             onClick={() => fields.push({})}>add circle outline</i>
+            onClick={() => fields.push({})}>add circle outline</i>
         </li>
         {fields.map((phone, i) =>
           <li key={i}>
             <i className='material-icons'
-               onClick={() => fields.remove(i)}>remove circle</i>
+              onClick={() => fields.remove(i)}>remove circle</i>
             <Field
               name={`${phone}.number`}
               placeholder='Number'
@@ -66,7 +66,7 @@ class Addnew extends Component {
     return (
       <article>
         <form className='flex-container'
-              onSubmit={handleSubmit(this.handleSubmit)}>
+          onSubmit={handleSubmit(this.handleSubmit)}>
           <div className='flex left'>
             <Field
               name='image'
@@ -74,7 +74,7 @@ class Addnew extends Component {
             />
           </div>
           <div className='flex right'>
-            <hr/>
+            <hr />
             <Field
               name='fullName'
               label='full name'
@@ -84,7 +84,7 @@ class Addnew extends Component {
               component={Input}
               validate={isRequired}
             />
-            <hr/>
+            <hr />
             <Field
               name='email'
               label='email'
@@ -94,7 +94,7 @@ class Addnew extends Component {
               component={Input}
               validate={isRequired}
             />
-            <hr/>
+            <hr />
             <FieldArray
               name='numbers'
               component={ContactPhone} />

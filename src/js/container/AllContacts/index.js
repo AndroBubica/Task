@@ -46,24 +46,23 @@ class AllContacts extends Component {
     )
   }
 
-
-
   renderCard (index, id, favorite) {
     const { location } = this.props
 
     if (location.pathname === '/favorites') {
-      if (favorite)
-        return <Card key={index} Id={id}/>
+      if (favorite) { return <Card key={index} Id={id} /> }
     } else {
-      return <Card key={index} Id={id}/>
+      return <Card key={index} Id={id} />
     }
   }
 
   handleSearch (e) {
-    const { dispatch }  = this.props
+    const { dispatch, location } = this.props
+
+    let isFavorite = (location.pathname === '/favorites') || false
 
     this.setState({ inputText: e.target.value })
-    dispatch(searchContacts(e.target.value))
+    dispatch(searchContacts(e.target.value, isFavorite))
   }
 
   render () {
@@ -72,10 +71,11 @@ class AllContacts extends Component {
     return (
       <Aux>
         <Menu />
-        <label htmlFor='search' className='search' id="search-label">
+        <label htmlFor='search' className='search' id='search-label'>
           <i className='material-icons'>search</i>
-          <input value={this.state.inputText}
-                 type="text" id="search" onChange={this.handleSearch}/>
+          <input
+            value={this.state.inputText}
+            type='text' id='search' onChange={this.handleSearch} />
         </label>
         <section>
           {
@@ -96,7 +96,7 @@ class AllContacts extends Component {
 
 AllContacts.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default withRouter(connect(state => ({
