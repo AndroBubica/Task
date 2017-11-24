@@ -5,14 +5,13 @@ import { withRouter } from 'react-router-dom'
 import { changeFavoriteState } from '../../actions/contatcs'
 import ConfirmDialog from '../ConfirmDialog'
 
-import './styles.scss'
-
 class Card extends Component {
   constructor (props) {
     super(props)
 
     this.handleFavorite = this.handleFavorite.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
+    this.handleView = this.handleView.bind(this)
   }
 
   handleFavorite () {
@@ -25,21 +24,30 @@ class Card extends Component {
     this.props.history.push(`/contact/edit/${Id}`)
   }
 
+  handleView () {
+    const { Id } = this.props
+    this.props.history.push(`/contact/${Id}`)
+  }
+
   render () {
     const { cardInfo: {id, fullName, favorite} } = this.props
     return (
-      <div className='wrap-contact'>
-        <div className='Card'>
-          <div className='card_actions'>
-            <i className={['material-icons', favorite && 'isFavorite', 'actions'].join(' ')}
-              onClick={this.handleFavorite}>favorite</i>
+      <div className='cards-holder'>
+        <div className='card'>
+          <div className='card-actions'>
+            <i className={favorite ? 'fa fa-heart' : 'fa fa-heart-o'}
+               onClick={this.handleFavorite} />
             <i
-              className='material-icons card_right'
-              onClick={this.handleEdit}>border_color</i>
+              className='fa fa-pencil card_right'
+              onClick={this.handleEdit} />
             <ConfirmDialog contactId={id} />
           </div>
-          <img src='http://via.placeholder.com/80x80' className='card_image' />
+          <div className='view-profile'
+            onClick={this.handleView}>
+          <img
+               src='https://placeimg.com/80/80/people' className='card_image' />
           <p>{fullName}</p>
+          </div>
         </div>
       </div>
     )

@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Field, FieldArray, reduxForm } from 'redux-form'
-import './styles.scss'
 
 import Input from '../../components/Input'
 import ContactPhone from '../../components/ContactPhone'
 import FileUpload from '../../components/FileUpload'
+import ConfirmDialog from '../../components/ConfirmDialog'
 import { updateContact } from '../../actions/contatcs'
+import { isRequired } from '../../utils/validation'
 
 class EditContact extends Component {
   constructor (props) {
@@ -40,12 +41,12 @@ class EditContact extends Component {
       <ul>
         <li>
           <i className='material-icons'
-            onClick={() => fields.push({})}>add circle outline</i>
+             onClick={() => fields.push({})}>add circle outline</i>
         </li>
         {fields.map((phone, i) =>
           <li key={i}>
             <i className='material-icons'
-              onClick={() => fields.remove(i)}>remove circle</i>
+               onClick={() => fields.remove(i)}>remove circle</i>
             <Field
               name={`${phone}.number`}
               placeholder='Number'
@@ -62,41 +63,59 @@ class EditContact extends Component {
   }
 
   render () {
-    const { handleSubmit } = this.props
+    const { handleSubmit, match: {params} } = this.props
+    if (!Number.isInteger(+params.userId)) return <h2>not a valid number /:id</h2>
+
     return (
-      <section>
-        <form
-          className='ContactForm'
-          onSubmit={handleSubmit(this.handleSubmit)}>
-          <Field
-            name='image'
-            component={FileUpload}
-          />
-          <div className='formStyle'>
+      <article>
+        <form className='flex-container'
+              onSubmit={handleSubmit(this.handleSubmit)}>
+          <div className='flex left'>
+            <Field
+              name='image'
+              component={FileUpload}
+            />
+          </div>
+          <div className='flex right'>
+            <div className='edit-action-icons'>
+              <p className='rotate-icon'
+                 onClick={this.props.history.goBack}
+              ><i className="material-icons">subdirectory_arrow_right</i></p>
+              <div>
+                <ConfirmDialog contactId={Number(params.userId)} label='Delete' isReturn />
+              </div>
+            </div>
+            <hr/>
             <Field
               name='fullName'
-              label='Test_label'
+              label='full name'
               type='text'
               iconName='person'
               placeholder='Test'
               component={Input}
+              validation={isRequired}
             />
+            <hr/>
             <Field
               name='email'
-              label='Test_label'
-              type='text'
+              label='email'
+              type='email'
               iconName='email'
               placeholder='Test'
               component={Input}
+              validate={isRequired}
             />
-            <FieldArray name='numbers'
-              myPersonalArrayProp={[]}
+            <hr/>
+            <FieldArray
+              name='numbers'
               component={ContactPhone} />
-            <button onClick={this.handleCancel}>Cancel</button>
-            <button type='submit'>Save</button>
+            <div className='buttons'>
+              <button className='button-cancel' onClick={this.handleCancel}>Cancel</button>
+              <button className='button-save' type='submit'>Save</button>
+            </div>
           </div>
         </form>
-      </section>
+      </article>
     )
   }
 }
@@ -104,21 +123,25 @@ class EditContact extends Component {
 EditContact.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return ({
-    stateImage: state.contacts[ownProps.match.params.userId].image,
-    favorite: state.contacts[ownProps.match.params.userId].favorite,
-    initialValues: {
-      fullName: state.contacts[ownProps.match.params.userId].fullName,
-      email: state.contacts[ownProps.match.params.userId].email,
-      numbers: state.contacts[ownProps.match.params.userId].numbers
-    }
-  })
+  if (Number.isInteger(+ownProps.match.params.userId))
+    return ({
+      stateImage: state.contacts[ownProps.match.params.userId].image,
+      Id: state.contacts[ownProps.match.params.userId].id,
+      initialValues: {
+        fullName: state.contacts[ownProps.match.params.userId].fullName,
+        email: state.contacts[ownProps.match.params.userId].email,
+        numbers: state.contacts[ownProps.match.params.userId].numbers,
+      }
+    })
+  return ({})
 }
 export default connect(mapStateToProps)(reduxForm({
-  form: 'EditContactContact'
+  form: 'EditContactContact',
+  onSubmitSuccess: (result, dispatch, props) => {
+    props.history.goBack()
+  }
 })(EditContact))

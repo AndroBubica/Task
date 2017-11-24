@@ -28,34 +28,47 @@ class ConfirmDialog extends Component {
   }
 
   handleConfirm () {
-    const { contactId, dispatch } = this.props
+    const { contactId, dispatch, isReturn } = this.props
     dispatch(deleteContact(contactId))
     this.setState({showModal: false})
 
-    this.props.history.push('/')
+    isReturn && this.props.history.push('/')
   }
 
   render () {
+    const { label } = this.props
     const modal = this.state.showModal ? (
       <Modal>
         <div className='modal'>
-          <p>Are you sure, you want to dleete this contact?</p>
-          <button onClick={this.handleCancle}>Cancle</button>
-          <button onClick={this.handleConfirm}>Confirm</button>
+          <h1>Delete</h1>
+          <hr />
+          <div className='modal-main'>
+            <p>
+              Are you sure, you want to delete this contact?
+            </p>
+            <div className='buttons'>
+              <button className='button-cancel' onClick={this.handleCancle}>Cancle</button>
+              <button className='button-save' onClick={this.handleConfirm}>Confirm</button>
+            </div>
+          </div>
         </div>
       </Modal>
     ) : null
 
     return <Aux>
-      <i className='material-icons'
-         onClick={this.handleShow}>delete</i>
+      <label>{label}
+        <i className='fa fa-trash-o delete-action'
+           onClick={this.handleShow} />
+      </label>
       {modal}
     </Aux>
   }
 }
 
 ConfirmDialog.propTypes = {
-  contactId: PropTypes.number.isRequired
+  contactId: PropTypes.number.isRequired,
+  label: PropTypes.string,
+  isReturn: PropTypes.bool
 }
 
 export default withRouter(connect()(ConfirmDialog))

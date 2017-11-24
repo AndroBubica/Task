@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 
+import Aux from 'react-aux'
+
 class Navigation extends Component {
   constructor (props) {
     super(props)
@@ -37,7 +39,8 @@ class Navigation extends Component {
       <li key={elem.text}>
         <Link
           to={elem.link}
-          className={this.isActive(elem.link, elem.exact) ? 'active' : ''}>
+          className={this.isActive(elem.link, elem.exact) ? 'active' : ''}
+        >
           {elem.text}
         </Link>
       </li>
@@ -45,12 +48,14 @@ class Navigation extends Component {
   }
 
   render () {
-    return <nav className='navigation'>
-      <ul>
-        {this.renderNavigation()}
-      </ul>
-      <hr />
-    </nav>
+    return <Aux>
+      <nav>
+        <ul>
+          {this.renderNavigation()}
+        </ul>
+        <hr />
+      </nav>
+    </Aux>
   }
 }
 

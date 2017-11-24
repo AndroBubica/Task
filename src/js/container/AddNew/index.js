@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Field, FieldArray, reduxForm } from 'redux-form'
-import './styles.scss'
 
 import Input from '../../components/Input'
 import ContactPhone from '../../components/ContactPhone'
 import FileUpload from '../../components/FileUpload'
 import { addNewContact } from '../../actions/contatcs'
+import { isRequired } from '../../utils/validation'
 
 class Addnew extends Component {
   constructor (props) {
@@ -40,12 +40,12 @@ class Addnew extends Component {
       <ul>
         <li>
           <i className='material-icons'
-            onClick={() => fields.push({})}>add circle outline</i>
+             onClick={() => fields.push({})}>add circle outline</i>
         </li>
         {fields.map((phone, i) =>
           <li key={i}>
             <i className='material-icons'
-              onClick={() => fields.remove(i)}>remove circle</i>
+               onClick={() => fields.remove(i)}>remove circle</i>
             <Field
               name={`${phone}.number`}
               placeholder='Number'
@@ -64,39 +64,47 @@ class Addnew extends Component {
   render () {
     const { handleSubmit } = this.props
     return (
-      <section>
-        <form
-          className='ContactForm'
-          onSubmit={handleSubmit(this.handleSubmit)}>
-          <Field
-            name='image'
-            component={FileUpload}
-          />
-          <div className='formStyle'>
+      <article>
+        <form className='flex-container'
+              onSubmit={handleSubmit(this.handleSubmit)}>
+          <div className='flex left'>
+            <Field
+              name='image'
+              component={FileUpload}
+            />
+          </div>
+          <div className='flex right'>
+            <hr/>
             <Field
               name='fullName'
-              label='Test_label'
+              label='full name'
               type='text'
               iconName='person'
               placeholder='Test'
               component={Input}
+              validate={isRequired}
             />
+            <hr/>
             <Field
               name='email'
-              label='Test_label'
-              type='text'
+              label='email'
+              type='email'
               iconName='email'
               placeholder='Test'
               component={Input}
+              validate={isRequired}
             />
-            <FieldArray name='numbers'
-              myPersonalArrayProp={[]}
+            <hr/>
+            <FieldArray
+              name='numbers'
               component={ContactPhone} />
-            <button onClick={this.handleCancel}>Cancel</button>
-            <button type='submit'>Save</button>
+            <div className='buttons'>
+              <button className='button-cancel' onClick={this.handleCancel}>Cancel</button>
+              <button className='button-save' type='submit'>Save</button>
+            </div>
           </div>
         </form>
-      </section>
+      </article>
     )
   }
 }
@@ -113,5 +121,8 @@ export default connect(state => ({
     numbers: [{}]
   }
 }))(reduxForm({
-  form: 'addNewContact'
+  form: 'addNewContact',
+  onSubmitSuccess: (result, dispatch, props) => {
+    props.history.replace('/')
+  }
 })(Addnew))

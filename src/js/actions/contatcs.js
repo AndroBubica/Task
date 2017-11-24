@@ -1,5 +1,6 @@
 import {
-  ADD_NEW_CONTACT, CHANGE_FAVORITE_STATE, DELETE_CONTACT, UPDATE_CONTACT
+  ADD_NEW_CONTACT, CHANGE_FAVORITE_STATE, DELETE_CONTACT,
+  SEARCH_CONTACTS, UPDATE_CONTACT
 }
   from '../constants/actions'
 
@@ -24,6 +25,11 @@ export const updateContactSuccess = (updateId, updatedValues) => ({
   updatedValues
 })
 
+export const searchContactsSuccess = text => ({
+  type: SEARCH_CONTACTS,
+  text
+})
+
 export const addNewContact = values =>
   dispatch =>
     dispatch(addNewContactSuccess(values))
@@ -39,3 +45,7 @@ export const deleteContact = id =>
 export const updateContact = (id, values) =>
   dispatch =>
     dispatch(updateContactSuccess(id, values))
+
+export const searchContacts = id =>
+  dispatch =>
+    dispatch(searchContactsSuccess(id))

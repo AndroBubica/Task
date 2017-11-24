@@ -6,9 +6,10 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import AllContacts from '../AllContacts'
 import NotFound from '../NotFound'
-import Menu from '../Menu'
+import Header from '../../components/Header'
 import AddNew from '../AddNew'
 import EditContact from '../EditContact'
+import ViewContact from '../ViewContact'
 
 const { persistor, store } = createAppStore()
 
@@ -26,13 +27,13 @@ class App extends Component {
           persistor={persistor}>
           <Router>
             <main>
-              <Menu />
+              <Header />
               <Switch>
                 <Route exact path='/' component={AllContacts} />
                 <Route path='/favorites' component={AllContacts} />
+                <Route path='/contact/add' component={AddNew} />
                 <Route path='/contact/edit/:userId' component={EditContact} />
-                <Route path='/contact/:userId' component={EditContact} />
-                <Route path='/addContact/' component={AddNew} />
+                <Route path='/contact/:userId' component={ViewContact} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </main>
